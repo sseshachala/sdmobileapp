@@ -21,3 +21,9 @@ $router->group(['prefix' => 'sdmobile/api'], function () use ($router) {
     $router->get('millet/{id}', ['uses' => 'sdmobileapp\MilletController@showOneMillet']);
 
 });
+
+//$router->group(['prefix' => 'sdmobile/api', 'middleware' => 'auth'], function () use ($router) {
+//    $router->get('millets',  ['uses' => 'sdmobileapp\MilletController@showAllMillets']);
+
+//    $router->get('millet/{id}', ['uses' => 'sdmobileapp\MilletController@showOneMillet']);
+//});
