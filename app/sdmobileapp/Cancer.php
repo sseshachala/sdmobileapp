@@ -4,7 +4,7 @@ namespace App\sdmobileapp;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Disease extends Model
+class Cancer extends Model
 {
     /** @lang text */
     protected $table =
@@ -16,7 +16,7 @@ class Disease extends Model
      * @var array
      */
     protected $fillable = [
-        'ailment_or_disease', 'dictoction_kashayas_juice'
+        'cancer_type', 'dictoction_kashayas_juice_every_week', 'dictoction_kashayas_juice_afternoon_each_week'
     ];
 
     /**
