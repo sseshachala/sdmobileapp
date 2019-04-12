@@ -61,6 +61,10 @@ class MilletDietForDisease extends Model
 
                 $obj-> milletProtocol .= $row->name .'=' . $row-> number_of_days .' days, ';
             }
+            $instrs = SpecialInstructionForDisease::getInstructions($disease->id);
+            if(!empty($instrs))
+                $obj->specialInstruction = $instrs;
+
             $arr[] = $obj;
 
         }
