@@ -16,6 +16,7 @@ $router->get('/', function () use ($router) {
 });
 
 $router->group(['prefix' => 'sdmobile/api'], function () use ($router) {
+    $router->get('menu',  ['uses' => 'sdmobileapp\MenuController@showAllMenu']);
     $router->get('millets',  ['uses' => 'sdmobileapp\MilletController@showAllMillets']);
 
     $router->get('millet/{id}', ['uses' => 'sdmobileapp\MilletController@showOneMillet']);
@@ -30,6 +31,7 @@ $router->group(['prefix' => 'sdmobile/api'], function () use ($router) {
 
     $router->get('diseaseMilletDiet', ['uses' => 'sdmobileapp\MilletDietForDiseaseController@showAllMilletDiet']);
     $router->get('cancerMilletDiet', ['uses' => 'sdmobileapp\MilletDietForCancerController@showAllMilletDiet']);
+    $router->get('milletFaq', ['uses' => 'sdmobileapp\MilletFaqController@showAllFaq']);
 
 });
 
