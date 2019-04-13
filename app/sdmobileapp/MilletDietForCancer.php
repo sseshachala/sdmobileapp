@@ -48,8 +48,8 @@ class MilletDietForCancer extends Model
             $obj = new \ stdClass();
             $obj->id  = $cancer->id;
             $obj -> cancer_type = $cancer->cancer_type;
-            $obj->dictoction_kashayas_Juice_every_week=$cancer->dictoction_kashayas_juice_every_week;
-            $obj-> dictoction_kashayas_juice_every_week = $cancer->dictoction_kashayas_juice_afternoon_each_week;
+            $obj->dictoction_kashayas_juice_every_week=$cancer->dictoction_kashayas_juice_every_week;
+            $obj-> dictoction_kashayas_juice_afternoon_each_week = $cancer->dictoction_kashayas_juice_afternoon_each_week;
             $obj-> milletProtocol ='';
             foreach($rows as $row)
             {
