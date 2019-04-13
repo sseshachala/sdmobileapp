@@ -11,7 +11,7 @@ class MilletFaqController extends Controller
 
     public function showAllFaq()
     {
-        return response()->json(MilletFaq::all());
+        return response()->json(MilletFaq::paginate(10));
     }
 
 }
