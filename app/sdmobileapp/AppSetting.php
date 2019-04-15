@@ -4,7 +4,7 @@ namespace App\sdmobileapp;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Cancer extends Model
+class AppSetting extends Model
 {
     /** @lang text */
     protected $table =
