@@ -55,7 +55,7 @@ class MilletDietForCancer extends Model
             {
                 $obj-> milletProtocol .= "<li>".$row->name .'=' . $row-> number_of_days .' days </li>';
             }
-            $obj-> milletProtocol ='</ol>';
+            $obj-> milletProtocol .='</ol>';
             $arr[] = $obj;
         }
         return $arr;
