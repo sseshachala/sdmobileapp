@@ -55,12 +55,13 @@ class MilletDietForDisease extends Model
             $obj->id  = $disease->id;
             $obj -> disease_name = $disease->ailment_or_disease;
             $obj->dictoction_kashayas_juice=$disease->dictoction_kashayas_juice;
-            $obj-> milletProtocol ='';
+            $obj-> milletProtocol ='<ul>';
             foreach($rows as $row)
             {
 
-                $obj-> milletProtocol .= $row->name .'=' . $row-> number_of_days .' days, ';
+                $obj-> milletProtocol .= '<li>'.$row->name .'=' . $row-> number_of_days .' days </li>';
             }
+            $obj-> milletProtocol ='</ul>';
             $instrs = SpecialInstructionForDisease::getInstructions($disease->id);
             if(!empty($instrs))
                 $obj->specialInstruction = $instrs;
