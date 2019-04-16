@@ -50,11 +50,12 @@ class MilletDietForCancer extends Model
             $obj -> cancer_type = $cancer->cancer_type;
             $obj->dictoction_kashayas_juice_every_week=$cancer->dictoction_kashayas_juice_every_week;
             $obj-> dictoction_kashayas_juice_afternoon_each_week = $cancer->dictoction_kashayas_juice_afternoon_each_week;
-            $obj-> milletProtocol ='';
+            $obj-> milletProtocol ='<ol>';
             foreach($rows as $row)
             {
-                $obj-> milletProtocol .= $row->name .'=' . $row-> number_of_days .' days, ';
+                $obj-> milletProtocol .= "<li>".$row->name .'=' . $row-> number_of_days .' days </li>';
             }
+            $obj-> milletProtocol ='</ol>';
             $arr[] = $obj;
         }
         return $arr;
