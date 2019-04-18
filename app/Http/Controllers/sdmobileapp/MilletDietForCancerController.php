@@ -17,7 +17,7 @@ class MilletDietForCancerController extends Controller
 
     public function showOneMilletDiet($id)
     {
-        return response()->json(MilletDietForDisease::find($id));
+        return response()->json(MilletDietForCancer::find($id));
     }
 
 
