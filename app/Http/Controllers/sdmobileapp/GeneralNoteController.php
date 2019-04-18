@@ -11,7 +11,7 @@ class GeneralNoteController extends Controller
 
     public function showAllNotes()
     {
-        return response()->json(GeneralNote::all());
+        return response()->json(GeneralNote::paginate(10));
     }
 
     public function showOneNote($id)

@@ -11,7 +11,7 @@ class KidsNoteController extends Controller
 
     public function showAllNotes()
     {
-        return response()->json(KidsNote::all());
+        return response()->json(KidsNote::paginate(10));
     }
 
     public function showOneNote($id)
