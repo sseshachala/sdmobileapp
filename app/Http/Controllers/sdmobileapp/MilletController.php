@@ -20,6 +20,7 @@ class MilletController extends Controller
             'Content-Type' => 'application/json; charset=UTF-8',
             'charset' => 'utf-8'
         );
-        return response()->json(Millet::find($id));
+        return response()->json(Millet::find($id) , 200, $header, JSON_UNESCAPED_UNICODE);
+        //return response()->json(Millet::find($id));
     }
 }
