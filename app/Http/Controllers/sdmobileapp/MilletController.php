@@ -16,6 +16,10 @@ class MilletController extends Controller
 
     public function showOneMillet($id)
     {
+        $header = array (
+            'Content-Type' => 'application/json; charset=UTF-8',
+            'charset' => 'utf-8'
+        );
         return response()->json(Millet::find($id));
     }
 }
