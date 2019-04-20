@@ -16,7 +16,7 @@ class KashayaLeaves extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'image', 'others'
+        'name', 'description'
     ];
 
     /**
