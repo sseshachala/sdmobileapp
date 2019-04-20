@@ -35,6 +35,7 @@ $router->group(['prefix' => 'sdmobile/api'], function () use ($router) {
     $router->get('milletDoc', ['uses' => 'sdmobileapp\MilletDocController@showAll']);
     $router->get('settings', ['uses' => 'sdmobileapp\AppSettingController@showAll']);
     $router->get('recipes', ['uses' => 'sdmobileapp\MilletRecipeController@showAll']);
+    $router->get('leaves', ['uses' => 'sdmobileapp\KashayaLeavesController@showAll']);
 
 });
 
