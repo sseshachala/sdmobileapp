@@ -4,11 +4,11 @@ namespace App\sdmobileapp;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Menu extends Model
+class AppProfileType extends Model
 {
     /** @lang text */
     protected $table =
-        "sd_dashboard_menu";
+        "sd_app_profile_template_table";
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +16,7 @@ class Menu extends Model
      * @var array
      */
     protected $fillable = [
-        'icon', 'menu_name'
+        'name', 'profile_type'
     ];
 
     /**
@@ -25,5 +25,4 @@ class Menu extends Model
      * @var array
      */
     protected $hidden = [];
-
 }
