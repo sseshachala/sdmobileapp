@@ -117,7 +117,7 @@ class MilletDietForCancer extends Model
             $rows = DB::table('sd_millet_diet_cancer_table')
                 ->leftjoin('sd_millets_table', 'sd_millet_diet_cancer_table.millet_id', '=', 'sd_millets_table.id')
                 ->leftjoin('sd_cancer_table', 'sd_millet_diet_cancer_table.cancer_type_id', '=', 'sd_cancer_table.id')
-                ->select('sd_cancer_table.id',
+                ->select('sd_cancer_table.id', 'sd_cancer_table.tags',
                     'sd_millets_table.name', 'sd_millets_table.millet_type', 'sd_millets_table.description', 'sd_millet_diet_cancer_table.number_of_days')
                 ->where('sd_millet_diet_cancer_table.cancer_type_id', '=', $cancer->id)
                 ->get();
@@ -125,7 +125,8 @@ class MilletDietForCancer extends Model
             $obj->id  = $cancer->id;
             $obj -> cancer_type = $cancer->cancer_type;
             $obj->dictoction_kashayas_juice_every_week=$cancer->dictoction_kashayas_juice_every_week;
-            $obj-> dictoction_kashayas_juice_afternoon_each_week = $cancer->dictoction_kashayas_juice_afternoon_each_week;
+            $obj-> dictoction_kashayas_juice_afternoon_each_week = $cancer->dictoction_kashayas_juice_afternoon_each_week.PHP_EOL.'<b>Alternative names'.PHP_EOL.$cancer->tags;
+            //$obj->tags = $cancer->tags;
             $obj-> milletProtocol ='<ul>';
 
             foreach($rows as $row)

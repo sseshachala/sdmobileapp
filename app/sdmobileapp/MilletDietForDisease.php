@@ -70,7 +70,7 @@ class MilletDietForDisease extends Model
             $rows = DB::table('sd_millet_diet_diseases_table')
                 ->leftjoin('sd_millets_table', 'sd_millet_diet_diseases_table.millet_id', '=', 'sd_millets_table.id')
                 ->leftjoin('sd_disease_table', 'sd_millet_diet_diseases_table.disease_id', '=', 'sd_disease_table.id')
-                ->select('sd_millets_table.name',
+                ->select('sd_millets_table.name','sd_disease_table.tags',
                     'sd_millet_diet_diseases_table.millet_id', 'sd_millet_diet_diseases_table.number_of_days')
                 ->where('sd_millet_diet_diseases_table.disease_id', '=' , $disease->id)
                 ->get();
@@ -78,7 +78,8 @@ class MilletDietForDisease extends Model
             $obj = new \ stdClass();
             $obj->id  = $disease->id;
             $obj -> disease_name = $disease->ailment_or_disease;
-            $obj->dictoction_kashayas_juice=$disease->dictoction_kashayas_juice;
+            $obj->dictoction_kashayas_juice=$disease->dictoction_kashayas_juice.PHP_EOL.'<b>Alternative names'.PHP_EOL.$disease->tags;;
+            //$obj->tags = $disease->tags;
             $obj-> milletProtocol ='<ul>';
             foreach($rows as $row)
             {
