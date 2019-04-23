@@ -11,7 +11,7 @@ class MenuController extends Controller
 
     public function showAllMenu()
     {
-        return response()->json(Menu::where('enabled', 1)->get());
+        return response()->json(Menu::where('enabled', 1)->orderBy('order_by', 'asc')->get());
     }
 
 }
