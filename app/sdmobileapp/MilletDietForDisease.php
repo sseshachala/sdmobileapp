@@ -78,7 +78,7 @@ class MilletDietForDisease extends Model
             $obj = new \ stdClass();
             $obj->id  = $disease->id;
             $obj -> disease_name = $disease->ailment_or_disease;
-            $obj->dictoction_kashayas_juice=$disease->dictoction_kashayas_juice.PHP_EOL.'<b>Alternative names'.PHP_EOL.$disease->tags;;
+            $obj->dictoction_kashayas_juice=$disease->dictoction_kashayas_juice.'<br><br>Tags<br>'.$disease->tags;
             //$obj->tags = $disease->tags;
             $obj-> milletProtocol ='<ul>';
             foreach($rows as $row)
