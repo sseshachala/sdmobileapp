@@ -125,7 +125,7 @@ class MilletDietForCancer extends Model
             $obj->id  = $cancer->id;
             $obj -> cancer_type = $cancer->cancer_type;
             $obj->dictoction_kashayas_juice_every_week=$cancer->dictoction_kashayas_juice_every_week;
-            $obj-> dictoction_kashayas_juice_afternoon_each_week = $cancer->dictoction_kashayas_juice_afternoon_each_week.'<br><br>Tags<br>'.$cancer->tags;
+            $obj-> dictoction_kashayas_juice_afternoon_each_week = $cancer->dictoction_kashayas_juice_afternoon_each_week.'<br><br><strong>Tags</strong><br>'.$cancer->tags;
             //$obj->tags = $cancer->tags;
             $obj-> milletProtocol ='<ul>';
 
