@@ -30,7 +30,15 @@ $router->group(['prefix' => 'sdmobile/api'], function () use ($router) {
     $router->get('kidsNote/{id}', ['uses' => 'sdmobileapp\KidsNoteController@showOneNote']);
 
     $router->get('diseaseMilletDiet', ['uses' => 'sdmobileapp\MilletDietForDiseaseController@showAllMilletDiet']);
+    $router->get('findMilletByDisease/{searchTerm}', ['uses' => 'sdmobileapp\MilletDietForDiseaseController@findMilletByDisease']);
+
     $router->get('cancerMilletDiet', ['uses' => 'sdmobileapp\MilletDietForCancerController@showAllMilletDiet']);
+    $router->get('findMilletByCancer/{searchTerm}', ['uses' => 'sdmobileapp\MilletDietForCancerController@findMilletByCancer']);
+
+    $router->get('search/filterTypes', ['uses' => 'sdmobileapp\SearchController@getFilterTypes']);
+    $router->get('search/do/{filterType}/{searchTerm}', ['uses' => 'sdmobileapp\SearchController@doSearch']);
+
+
     $router->get('milletFaq', ['uses' => 'sdmobileapp\MilletFaqController@showAllFaq']);
     $router->get('milletDoc', ['uses' => 'sdmobileapp\MilletDocController@showAll']);
     $router->get('settings', ['uses' => 'sdmobileapp\AppSettingController@showAll']);

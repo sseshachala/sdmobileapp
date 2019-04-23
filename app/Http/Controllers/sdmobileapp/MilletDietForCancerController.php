@@ -20,5 +20,11 @@ class MilletDietForCancerController extends Controller
         return response()->json(MilletDietForCancer::find($id));
     }
 
+    public function findMilletByCancer($searchTerm)
+    {
+        return response()->json(MilletDietForCancer::filter($searchTerm));
+    }
+
+
 
 }

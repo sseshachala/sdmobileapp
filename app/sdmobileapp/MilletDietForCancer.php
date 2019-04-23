@@ -35,7 +35,83 @@ class MilletDietForCancer extends Model
          *
          */
         $cancers = Cancer::all();
+        return MilletDietForCancer::getMilletDietForCancer($cancers);
 
+
+    }
+
+    public static function filter($searchTerm) {
+
+        /*$searchValues = preg_split('/\s+/', $searchTerm, -1, PREG_SPLIT_NO_EMPTY);
+        $searchValues = explode(' ', $searchTerm);
+
+        $cancers = Cancer::where(function ($query) use ($searchValues) {
+            foreach ($searchValues as $searchTerm) {
+                $query->where('cancer_type', 'LIKE', '%' . $searchTerm . '%');
+            }
+        })->orWhere(function ($query) use ($searchValues) {
+            foreach($searchValues as $searchTerm) {
+                $query->orWhere('dictoction_kashayas_juice_every_week', 'LIKE', '%' . $searchTerm . '%');
+            }
+        })->orWhere(function ($query) use ($searchValues) {
+            foreach($searchValues as $searchTerm) {
+                $query->orWhere('dictoction_kashayas_juice_afternoon_each_week', 'LIKE', '%' . $searchTerm . '%');
+            }
+        })->orWhere(function ($query) use ($searchValues) {
+            foreach($searchValues as $searchTerm) {
+                $query->orWhere('tags', 'LIKE', '%' . $searchTerm . '%');
+            }
+        })->toSql();
+
+        dd($cancers);*/
+
+
+
+        $reserved = array("*", ".", "+", "-");
+
+
+        if (in_array($searchTerm, $reserved)) {
+           return MilletDietForCancer::milletDiet();
+        }
+
+        $cancers = Cancer::selectRaw("*, MATCH(cancer_type, dictoction_kashayas_juice_every_week, dictoction_kashayas_juice_afternoon_each_week, tags) AGAINST('$searchTerm' IN BOOLEAN MODE) as relScore")
+            ->whereRaw("MATCH(cancer_type, dictoction_kashayas_juice_every_week, dictoction_kashayas_juice_afternoon_each_week, tags) AGAINST('$searchTerm' IN BOOLEAN MODE)", MilletDietForCancer::fullTextWildcards($searchTerm))
+            ->get();
+
+        /*$cancers = Cancer::query()->where('cancer_type', 'LIKE', "%{$searchTerm}%")
+                                  ->orWhere('dictoction_kashayas_juice_every_week', 'LIKE', "%{$searchTerm}%")
+                                  ->orWhere('dictoction_kashayas_juice_afternoon_each_week', 'LIKE', "%{$searchTerm}%")
+                                  ->orWhere('tags', 'LIKE', "%{$searchTerm}%")
+                                  ->get();
+        */
+        return MilletDietForCancer::getMilletDietForCancer($cancers);
+    }
+
+    private static function fullTextWildcards($term)
+    {
+        // removing symbols used by MySQL
+        $reservedSymbols = ['-', '+', '<', '>', '@', '(', ')', '~'];
+        $term = str_replace($reservedSymbols, '', $term);
+
+        $words = explode(' ', $term);
+
+        foreach($words as $key => $word) {
+            /*
+             * applying + operator (required word) only big words
+             * because smaller ones are not indexed by mysql
+             */
+            if(strlen($word) >= 3) {
+                $words[$key] = '+' . $word . '*';
+            }
+        }
+
+        $searchTerm = implode( ' ', $words);
+
+        return $searchTerm;
+    }
+
+    private static function getMilletDietForCancer($cancers)
+    {
         $arr =[];
         foreach($cancers as $cancer) {
             $rows = DB::table('sd_millet_diet_cancer_table')
