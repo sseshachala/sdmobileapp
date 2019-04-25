@@ -75,9 +75,11 @@ class MilletDietForCancer extends Model
         }
 
         $cancers = Cancer::selectRaw("*, MATCH(cancer_type, dictoction_kashayas_juice_every_week, dictoction_kashayas_juice_afternoon_each_week, tags) AGAINST('$searchTerm' IN BOOLEAN MODE) as relScore")
-            ->whereRaw("MATCH(cancer_type, dictoction_kashayas_juice_every_week, dictoction_kashayas_juice_afternoon_each_week, tags) AGAINST('$searchTerm' IN BOOLEAN MODE)", MilletDietForCancer::fullTextWildcards($searchTerm))
+            ->whereRaw("MATCH(cancer_type, dictoction_kashayas_juice_every_week, dictoction_kashayas_juice_afternoon_each_week, tags) AGAINST('$searchTerm' IN NATURAL LANGUAGE MODE)", MilletDietForCancer::fullTextWildcards($searchTerm))
             ->orderBy('relScore')
             ->get();
+
+        //print_r($cancers);
 
         /*$cancers = Cancer::query()->where('cancer_type', 'LIKE', "%{$searchTerm}%")
                                   ->orWhere('dictoction_kashayas_juice_every_week', 'LIKE', "%{$searchTerm}%")

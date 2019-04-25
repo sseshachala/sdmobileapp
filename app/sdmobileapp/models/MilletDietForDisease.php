@@ -54,7 +54,7 @@ class MilletDietForDisease extends Model
         }
 
         $diseases = Disease::selectRaw("*, MATCH(ailment_or_disease, dictoction_kashayas_juice, tags) AGAINST('$searchTerm' IN BOOLEAN MODE) as relScore")
-            ->whereRaw("MATCH(ailment_or_disease, dictoction_kashayas_juice, tags) AGAINST('$searchTerm' IN BOOLEAN MODE)", MilletDietForDisease::fullTextWildcards($searchTerm))
+            ->whereRaw("MATCH(ailment_or_disease, dictoction_kashayas_juice, tags) AGAINST('$searchTerm' IN NATURAL LANGUAGE MODE)", MilletDietForDisease::fullTextWildcards($searchTerm))
             ->orderBy('relScore')
             ->get();
 
