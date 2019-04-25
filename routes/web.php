@@ -37,6 +37,7 @@ $router->group(['prefix' => 'sdmobile/api'], function () use ($router) {
 
     $router->get('search/filterTypes', ['uses' => 'sdmobileapp\SearchController@getFilterTypes']);
     $router->get('search/do/{filterType}/{searchTerm}', ['uses' => 'sdmobileapp\SearchController@doSearch']);
+    $router->get('search', ['uses' => 'sdmobileapp\SearchController@index']);
 
 
     $router->get('milletFaq', ['uses' => 'sdmobileapp\MilletFaqController@showAllFaq']);
