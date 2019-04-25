@@ -1,14 +1,13 @@
 <?php
 
-namespace App\sdmobileapp;
-
+namespace App\sdmobileapp\models;
 use Illuminate\Database\Eloquent\Model;
 
-class MilletFaq extends Model
+class MilletDoc extends Model
 {
     /** @lang text */
     protected $table =
-        "sd_millet_faq";
+        "sd_doc_details";
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +15,7 @@ class MilletFaq extends Model
      * @var array
      */
     protected $fillable = [
-        'question', 'question_icon', 'answer', 'answer_icon'
+        'about', 'image'
     ];
 
     /**

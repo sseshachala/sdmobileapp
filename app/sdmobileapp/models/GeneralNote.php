@@ -1,14 +1,14 @@
 <?php
 
-namespace App\sdmobileapp;
+namespace App\sdmobileapp\models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Recipe extends Model
+class GeneralNote extends Model
 {
     /** @lang text */
     protected $table =
-        "sd_millet_recipes";
+        "sd_general_notes";
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +16,7 @@ class Recipe extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'description'
+        'name'
     ];
 
     /**

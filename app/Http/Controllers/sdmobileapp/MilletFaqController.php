@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\sdmobileapp;
 
-use App\sdmobileapp\MilletFaq;
+use App\sdmobileapp\models\MilletFaq;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

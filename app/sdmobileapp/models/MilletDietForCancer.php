@@ -1,6 +1,6 @@
 <?php
 
-namespace App\sdmobileapp;
+namespace App\sdmobileapp\models;
 
 
 use Illuminate\Database\Eloquent\Model;
@@ -113,6 +113,7 @@ class MilletDietForCancer extends Model
     private static function getMilletDietForCancer($cancers)
     {
         $arr =[];
+        //id  , Description, array of videos, Type of Ailment or,  Dictoction/Kashayam Diet, Millet Diet, Keywords
         foreach($cancers as $cancer) {
             $rows = DB::table('sd_millet_diet_cancer_table')
                 ->leftjoin('sd_millets_table', 'sd_millet_diet_cancer_table.millet_id', '=', 'sd_millets_table.id')
@@ -123,18 +124,20 @@ class MilletDietForCancer extends Model
                 ->get();
             $obj = new \ stdClass();
             $obj->id  = $cancer->id;
-            $obj -> cancer_type = $cancer->cancer_type;
-            $obj->dictoction_kashayas_juice_every_week=$cancer->dictoction_kashayas_juice_every_week;
-            $obj-> dictoction_kashayas_juice_afternoon_each_week = $cancer->dictoction_kashayas_juice_afternoon_each_week.'<br><br><strong>Tags</strong><br>'.$cancer->tags;
-            //$obj->tags = $cancer->tags;
-            $obj-> milletProtocol ='<ul>';
+            $obj -> Type_of_Ailment = $cancer->cancer_type;
+            $obj->Dictoction_Kashayam_Diet = $cancer->dictoction_kashayas_juice_every_week . '<br>'. $cancer->dictoction_kashayas_juice_afternoon_each_week;
+            $obj->Tags_Keywords=$cancer->tags;
+                           
+            $obj-> Millet_Protocol = '<ul>';
+            
 
             foreach($rows as $row)
             {
-                $obj-> milletProtocol .= "<li>".$row->name .'=' . $row-> number_of_days .' days </li>';
+                $obj-> Millet_Protocol .= "<li>".$row->name .'=' . $row-> number_of_days .' days </li>';
             }
-            $obj-> milletProtocol .='</ul>';
+            $obj-> Millet_Protocol .='</ul>';
             $arr[] = $obj;
+
         }
         return $arr;
     }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\sdmobileapp;
 
-use App\sdmobileapp\Recipe;
+use App\sdmobileapp\models\Recipe;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

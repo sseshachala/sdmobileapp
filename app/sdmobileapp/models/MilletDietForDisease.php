@@ -1,6 +1,6 @@
 <?php
 
-namespace App\sdmobileapp;
+namespace App\sdmobileapp\models;
 
 
 use Illuminate\Database\Eloquent\Model;
@@ -75,21 +75,23 @@ class MilletDietForDisease extends Model
                 ->where('sd_millet_diet_diseases_table.disease_id', '=' , $disease->id)
                 ->get();
 
+            //id  , Description, array of videos, Type of Ailment or,  Dictoction/Kashayam Diet, Millet Diet, Keywords
+
             $obj = new \ stdClass();
             $obj->id  = $disease->id;
-            $obj -> disease_name = $disease->ailment_or_disease;
-            $obj->dictoction_kashayas_juice=$disease->dictoction_kashayas_juice.'<br><br><strong>Tags</strong><br>'.$disease->tags;
-            //$obj->tags = $disease->tags;
-            $obj-> milletProtocol ='<ul>';
+            $obj -> Type_of_Ailment = $disease->ailment_or_disease;
+            $obj->Dictoction_Kashayam_Diet=$disease->dictoction_kashayas_juice.'<br><br><strong>Tags</strong><br>'.$disease->tags;
+            $obj->Tags_Keywords = $disease->tags;
+            $obj-> MilletProtocol ='<ul>';
             foreach($rows as $row)
             {
 
                 $obj-> milletProtocol .= '<li>'.$row->name .'=' . $row-> number_of_days .' days </li>';
             }
-            $obj-> milletProtocol .='</ul>';
+            $obj-> MilletProtocol .='</ul>';
             $instrs = SpecialInstructionForDisease::getInstructions($disease->id);
             if(!empty($instrs))
-                $obj->specialInstruction = $instrs;
+                $obj->specialInstruction = '<b> * '.$instrs.'</b>';
 
             $arr[] = $obj;
 

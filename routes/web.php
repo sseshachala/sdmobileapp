@@ -15,7 +15,7 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->group(['prefix' => 'sdmobile/api'], function () use ($router) {
+$router->group(['prefix' => 'sdmobile/api/v1.0'], function () use ($router) {
     $router->get('menu',  ['uses' => 'sdmobileapp\MenuController@showAllMenu']);
     $router->get('millets',  ['uses' => 'sdmobileapp\MilletController@showAllMillets']);
 
@@ -37,7 +37,6 @@ $router->group(['prefix' => 'sdmobile/api'], function () use ($router) {
 
     $router->get('search/filterTypes', ['uses' => 'sdmobileapp\SearchController@getFilterTypes']);
     $router->get('search/do/{filterType}/{searchTerm}', ['uses' => 'sdmobileapp\SearchController@doSearch']);
-    $router->get('search', ['uses' => 'sdmobileapp\SearchController@index']);
 
 
     $router->get('milletFaq', ['uses' => 'sdmobileapp\MilletFaqController@showAllFaq']);

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\sdmobileapp;
+namespace App\sdmobileapp\models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class KashayaLeaves extends Model
+class Menu extends Model
 {
     /** @lang text */
     protected $table =
-        "sd_kashaya_leaves";
+        "sd_dashboard_menu";
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +16,7 @@ class KashayaLeaves extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'description'
+        'icon', 'menu_name'
     ];
 
     /**
@@ -25,4 +25,5 @@ class KashayaLeaves extends Model
      * @var array
      */
     protected $hidden = [];
+
 }

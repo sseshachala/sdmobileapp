@@ -1,14 +1,14 @@
 <?php
 
-namespace App\sdmobileapp;
+namespace App\sdmobileapp\models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Disease extends Model
+class Recipe extends Model
 {
     /** @lang text */
     protected $table =
-        "sd_disease_table";
+        "sd_millet_recipes";
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +16,7 @@ class Disease extends Model
      * @var array
      */
     protected $fillable = [
-        'ailment_or_disease', 'dictoction_kashayas_juice'
+        'name', 'description'
     ];
 
     /**

@@ -3,7 +3,7 @@
 
 namespace App\Http\Controllers\sdmobileapp;
 
-use App\sdmobileapp\MilletDoc;
+use App\sdmobileapp\models\MilletDoc;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

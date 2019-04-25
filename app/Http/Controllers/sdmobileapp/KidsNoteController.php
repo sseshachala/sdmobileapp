@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\sdmobileapp;
 
-use App\sdmobileapp\KidsNote;
+use App\sdmobileapp\models\KidsNote;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

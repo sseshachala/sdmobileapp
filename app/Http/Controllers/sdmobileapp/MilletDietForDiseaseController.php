@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\sdmobileapp;
 
-use App\sdmobileapp\MilletDietForDisease;
+use App\sdmobileapp\models\MilletDietForDisease;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -34,7 +34,7 @@ class MilletDietForDiseaseController extends Controller
             'Content-Type' => 'application/json; charset=UTF-8',
             'charset' => 'utf-8'
         );
-        return response()->json(MilletDietForDisease::filter($searchTerm), 200, $header,  JSON_UNESCAPED_UNICODE);
+        return response()->json(MilletDietForDisease::filter(filter_var($filterType, FILTER_SANITIZE_STRING)), 200, $header,  JSON_UNESCAPED_UNICODE);
     }
 
 

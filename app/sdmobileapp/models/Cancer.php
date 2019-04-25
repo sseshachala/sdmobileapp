@@ -1,14 +1,14 @@
 <?php
 
-namespace App\sdmobileapp;
+namespace App\sdmobileapp\models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Menu extends Model
+class Cancer extends Model
 {
     /** @lang text */
     protected $table =
-        "sd_dashboard_menu";
+        "sd_cancer_table";
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +16,7 @@ class Menu extends Model
      * @var array
      */
     protected $fillable = [
-        'icon', 'menu_name'
+        'cancer_type', 'dictoction_kashayas_juice_every_week', 'dictoction_kashayas_juice_afternoon_each_week'
     ];
 
     /**
@@ -25,5 +25,4 @@ class Menu extends Model
      * @var array
      */
     protected $hidden = [];
-
 }
