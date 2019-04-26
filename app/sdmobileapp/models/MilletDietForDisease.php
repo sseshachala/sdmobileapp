@@ -64,7 +64,11 @@ class MilletDietForDisease extends Model
            ->leftJoin('sd_millets_table', 'sd_millet_diet_diseases_table.millet_Id', '=', 'sd_millets_table.id')
            ->whereRaw("MATCH(ailment_or_disease, dictoction_kashayas_juice, tags) AGAINST('$searchTerm' IN NATURAL LANGUAGE MODE)", MilletDietForDisease::fullTextWildcards($searchTerm))
            ->orWhereRaw("MATCH(sd_millets_table.name,sd_millets_table.description,sd_millets_table.alternative_names,sd_millets_table.uses,sd_millets_table.nutrition) AGAINST('$searchTerm' IN NATURAL LANGUAGE MODE)", MilletDietForDisease::fullTextWildcards($searchTerm))
+           ->orWhereRaw("sd_disease_table.ailment_or_disease like '%$searchTerm%'")
+           ->orWhereRaw("sd_disease_table.dictoction_kashayas_juice like '%$searchTerm%'")
+           ->orWhereRaw("sd_disease_table.tags like '%$searchTerm%'")
            ->get();
+
        $arr =[];
        // print_r($cancers); die();
        foreach($diseases as $disease) {

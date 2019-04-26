@@ -30,6 +30,7 @@ class MilletDietForCancer extends Model
 
     public static function milletDiet() {
         /*
+         *
          * Select sd_millet_diet_cancer_table.id,sd_cancer_table.cancer_type, sd_cancer_table.dictoction_kashayas_juice_afternoon_each_week,
          * sd_cancer_table.dictoction_kashayas_juice_every_week, sd_millets_table.name, sd_millets_table.millet_type, sd_millets_table.description,sd_millet_diet_cancer_table.number_of_days From sd_millet_diet_cancer_table left join sd_millets_table on sd_millet_diet_cancer_table.millet_id=sd_millets_table.id left join sd_cancer_table on sd_millet_diet_cancer_table.cancer_type_id = sd_cancer_table.id\
          *
@@ -57,6 +58,11 @@ class MilletDietForCancer extends Model
             ->leftJoin('sd_millets_table', 'sd_millet_diet_cancer_table.millet_Id', '=', 'sd_millets_table.id')
             ->whereRaw("MATCH(cancer_type, dictoction_kashayas_juice_every_week, dictoction_kashayas_juice_afternoon_each_week, tags) AGAINST('$searchTerm' IN NATURAL LANGUAGE MODE)", MilletDietForCancer::fullTextWildcards($searchTerm))
             ->orWhereRaw("MATCH(sd_millets_table.name,sd_millets_table.description,sd_millets_table.alternative_names,sd_millets_table.uses,sd_millets_table.nutrition) AGAINST('$searchTerm' IN NATURAL LANGUAGE MODE)", MilletDietForCancer::fullTextWildcards($searchTerm))
+            ->orWhereRaw("MATCH(sd_millets_table.name,sd_millets_table.description,sd_millets_table.alternative_names,sd_millets_table.uses,sd_millets_table.nutrition) AGAINST('$searchTerm' IN NATURAL LANGUAGE MODE)", MilletDietForDisease::fullTextWildcards($searchTerm))
+            ->orWhereRaw("sd_cancer_table.cancer_type like '%$searchTerm%'")
+            ->orWhereRaw("sd_cancer_table.dictoction_kashayas_juice_afternoon_each_week like '%$searchTerm%'")
+            ->orWhereRaw("sd_cancer_table.dictoction_kashayas_juice_every_week like '%$searchTerm%'")
+            ->orWhereRaw("sd_cancer_table.tags like '%$searchTerm%'")
             ->get();
 
         $arr =[];
