@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\sdmobileapp;
 
-use App\sdmobileapp\MilletDietForCancer;
-use App\sdmobileapp\MilletDietForDisease;
+use App\sdmobileapp\models\MilletDietForCancer;
+use App\sdmobileapp\models\MilletDietForDisease;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -24,8 +24,8 @@ class SearchController extends Controller
 
         switch ($filterType)
         {
-            case 'ailment_or_disease': return response()->json(MilletDietForDisease::filter(filter_var($filterType, FILTER_SANITIZE_STRING)), 200, $header, JSON_UNESCAPED_UNICODE); break;
-            case 'cancer_type': return response()->json(MilletDietForCancer::filter(filter_var($filterType, FILTER_SANITIZE_STRING)), 200, $header, JSON_UNESCAPED_UNICODE); break;
+            case 'ailment_or_disease': return response()->json(MilletDietForDisease::filter(filter_var($searchTerm, FILTER_SANITIZE_STRING)), 200, $header, JSON_UNESCAPED_UNICODE); break;
+            case 'cancer_type': return response()->json(MilletDietForCancer::filter(filter_var($searchTerm, FILTER_SANITIZE_STRING)), 200, $header, JSON_UNESCAPED_UNICODE); break;
         }
     }
 }

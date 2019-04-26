@@ -53,11 +53,34 @@ class MilletDietForDisease extends Model
             return MilletDietForDisease::milletDiet();
         }
 
-        $diseases = Disease::selectRaw("*, MATCH(ailment_or_disease, dictoction_kashayas_juice, tags) AGAINST('$searchTerm' IN BOOLEAN MODE) as relScore")
-            ->whereRaw("MATCH(ailment_or_disease, dictoction_kashayas_juice, tags) AGAINST('$searchTerm' IN NATURAL LANGUAGE MODE)", MilletDietForDisease::fullTextWildcards($searchTerm))
-            ->orderBy('relScore')
-            ->get();
 
+       $diseases = DB::table('sd_disease_table')->selectRaw("sd_disease_table.id, sd_disease_table.ailment_or_disease, sd_disease_table.tags")
+           ->selectRaw("sd_disease_table.dictoction_kashayas_juice")
+           ->selectRaw("concat_ws('=',sd_millets_table.name, concat(sd_millet_diet_diseases_table.number_of_days, ' days')) as milletProtocol")
+           ->selectRaw("sd_millets_table.millet_type,sd_millets_table.nutrition,sd_millets_table.description, sd_millets_table.scientific_name, sd_millets_table.uses")
+           ->selectRaw("MATCH(ailment_or_disease, dictoction_kashayas_juice, tags) AGAINST('$searchTerm' IN NATURAL LANGUAGE MODE) as diseaseRelScore")
+           ->selectRaw("MATCH(sd_millets_table.name,sd_millets_table.description,sd_millets_table.alternative_names,sd_millets_table.uses,sd_millets_table.nutrition) AGAINST('$searchTerm' IN NATURAL LANGUAGE MODE) as milletRelScore")
+           ->leftJoin('sd_millet_diet_diseases_table', 'sd_disease_table.id', '=', 'sd_millet_diet_diseases_table.disease_id')
+           ->leftJoin('sd_millets_table', 'sd_millet_diet_diseases_table.millet_Id', '=', 'sd_millets_table.id')
+           ->whereRaw("MATCH(ailment_or_disease, dictoction_kashayas_juice, tags) AGAINST('$searchTerm' IN NATURAL LANGUAGE MODE)", MilletDietForDisease::fullTextWildcards($searchTerm))
+           ->orWhereRaw("MATCH(sd_millets_table.name,sd_millets_table.description,sd_millets_table.alternative_names,sd_millets_table.uses,sd_millets_table.nutrition) AGAINST('$searchTerm' IN NATURAL LANGUAGE MODE)", MilletDietForDisease::fullTextWildcards($searchTerm))
+           ->get();
+       $arr =[];
+       // print_r($cancers); die();
+       foreach($diseases as $disease) {
+
+           $obj = new \ stdClass();
+           $obj->id  = $disease->id;
+
+           $obj -> Type_of_Ailment = $disease->ailment_or_disease;
+           $obj->Dictoction_Kashayam_Diet = $disease->dictoction_kashayas_juice ;
+           $obj->Tags_Keywords = $disease->tags;
+           //$obj->description= $cancer->description;
+           $obj->milletProtocol = $disease->milletProtocol;
+           $arr[] = $obj;
+
+       }
+       return $arr;;
 
         return MilletDietForDisease::getMilletDietForDisease($diseases);
     }
@@ -68,31 +91,30 @@ class MilletDietForDisease extends Model
         $arr =[];
         foreach($diseases as $disease)
         {
+
             $rows = DB::table('sd_millet_diet_diseases_table')
+                ->selectRaw("concat_ws('=',sd_millets_table.name, concat(sd_millet_diet_diseases_table.number_of_days, ' days')) as milletProtocol")
+                ->selectRaw("sd_millets_table.millet_type,sd_millets_table.nutrition,sd_millets_table.description, sd_millets_table.scientific_name, sd_millets_table.uses")
+                //->selectRaw('sd_millets_table.name','sd_millet_diet_diseases_table.millet_id')
                 ->leftjoin('sd_millets_table', 'sd_millet_diet_diseases_table.millet_id', '=', 'sd_millets_table.id')
-                ->leftjoin('sd_disease_table', 'sd_millet_diet_diseases_table.disease_id', '=', 'sd_disease_table.id')
-                ->select('sd_millets_table.name','sd_disease_table.tags',
-                    'sd_millet_diet_diseases_table.millet_id', 'sd_millet_diet_diseases_table.number_of_days')
+
                 ->where('sd_millet_diet_diseases_table.disease_id', '=' , $disease->id)
                 ->get();
-
-            //id  , Description, array of videos, Type of Ailment or,  Dictoction/Kashayam Diet, Millet Diet, Keywords
 
             $obj = new \ stdClass();
             $obj->id  = $disease->id;
             $obj -> Type_of_Ailment = $disease->ailment_or_disease;
-            $obj->Dictoction_Kashayam_Diet=$disease->dictoction_kashayas_juice.'<br><br><strong>Tags</strong><br>'.$disease->tags;
+            $obj->Dictoction_Kashayam_Diet=$disease->dictoction_kashayas_juice;
             $obj->Tags_Keywords = $disease->tags;
-            $obj-> MilletProtocol ='<ul>';
+            $obj-> milletProtocol ='<ul>';
             foreach($rows as $row)
             {
-
-                $obj-> milletProtocol .= '<li>'.$row->name .'=' . $row-> number_of_days .' days </li>';
+                 $obj-> milletProtocol .= '<li>'.$row->milletProtocol.' days </li>';
             }
-            $obj-> MilletProtocol .='</ul>';
+            $obj-> milletProtocol .='</ul>';
             $instrs = SpecialInstructionForDisease::getInstructions($disease->id);
             if(!empty($instrs))
-                $obj->specialInstruction = '<b> * '.$instrs.'</b>';
+                $obj->description = '<b> * '.$instrs.'</b>';
 
             $arr[] = $obj;
 

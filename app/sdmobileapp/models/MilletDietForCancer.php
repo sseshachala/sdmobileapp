@@ -36,36 +36,9 @@ class MilletDietForCancer extends Model
          */
         $cancers = Cancer::all();
         return MilletDietForCancer::getMilletDietForCancer($cancers);
-
-
     }
 
     public static function filter($searchTerm) {
-
-        /*$searchValues = preg_split('/\s+/', $searchTerm, -1, PREG_SPLIT_NO_EMPTY);
-        $searchValues = explode(' ', $searchTerm);
-
-        $cancers = Cancer::where(function ($query) use ($searchValues) {
-            foreach ($searchValues as $searchTerm) {
-                $query->where('cancer_type', 'LIKE', '%' . $searchTerm . '%');
-            }
-        })->orWhere(function ($query) use ($searchValues) {
-            foreach($searchValues as $searchTerm) {
-                $query->orWhere('dictoction_kashayas_juice_every_week', 'LIKE', '%' . $searchTerm . '%');
-            }
-        })->orWhere(function ($query) use ($searchValues) {
-            foreach($searchValues as $searchTerm) {
-                $query->orWhere('dictoction_kashayas_juice_afternoon_each_week', 'LIKE', '%' . $searchTerm . '%');
-            }
-        })->orWhere(function ($query) use ($searchValues) {
-            foreach($searchValues as $searchTerm) {
-                $query->orWhere('tags', 'LIKE', '%' . $searchTerm . '%');
-            }
-        })->toSql();
-
-        dd($cancers);*/
-
-
 
         $reserved = array("*", ".", "+", "-");
 
@@ -74,21 +47,35 @@ class MilletDietForCancer extends Model
            return MilletDietForCancer::milletDiet();
         }
 
-        $cancers = Cancer::selectRaw("*, MATCH(cancer_type, dictoction_kashayas_juice_every_week, dictoction_kashayas_juice_afternoon_each_week, tags) AGAINST('$searchTerm' IN BOOLEAN MODE) as relScore")
+        $cancers = DB::table('sd_cancer_table')->selectRaw("sd_cancer_table.id, sd_cancer_table.cancer_type, sd_cancer_table.tags")
+                                               ->selectRaw("sd_cancer_table.dictoction_kashayas_juice_afternoon_each_week")
+            ->selectRaw("sd_cancer_table.dictoction_kashayas_juice_every_week, concat_ws('=',sd_millets_table.name, concat(sd_millet_diet_cancer_table.number_of_days, ' days')) as milletProtocol")
+            ->selectRaw("sd_millets_table.millet_type,sd_millets_table.nutrition,sd_millets_table.description, sd_millets_table.scientific_name, sd_millets_table.uses")
+            ->selectRaw("MATCH(cancer_type, dictoction_kashayas_juice_every_week, dictoction_kashayas_juice_afternoon_each_week, tags) AGAINST('$searchTerm' IN NATURAL LANGUAGE MODE) as diseaseRelScore")
+            ->selectRaw("MATCH(sd_millets_table.name,sd_millets_table.description,sd_millets_table.alternative_names,sd_millets_table.uses,sd_millets_table.nutrition) AGAINST('$searchTerm' IN NATURAL LANGUAGE MODE) as milletRelScore")
+            ->leftJoin('sd_millet_diet_cancer_table', 'sd_cancer_table.id', '=', 'sd_millet_diet_cancer_table.cancer_type_id')
+            ->leftJoin('sd_millets_table', 'sd_millet_diet_cancer_table.millet_Id', '=', 'sd_millets_table.id')
             ->whereRaw("MATCH(cancer_type, dictoction_kashayas_juice_every_week, dictoction_kashayas_juice_afternoon_each_week, tags) AGAINST('$searchTerm' IN NATURAL LANGUAGE MODE)", MilletDietForCancer::fullTextWildcards($searchTerm))
-            ->orderBy('relScore')
+            ->orWhereRaw("MATCH(sd_millets_table.name,sd_millets_table.description,sd_millets_table.alternative_names,sd_millets_table.uses,sd_millets_table.nutrition) AGAINST('$searchTerm' IN NATURAL LANGUAGE MODE)", MilletDietForCancer::fullTextWildcards($searchTerm))
             ->get();
 
-        //print_r($cancers);
+        $arr =[];
+        // print_r($cancers); die();
+        foreach($cancers as $cancer) {
 
-        /*$cancers = Cancer::query()->where('cancer_type', 'LIKE', "%{$searchTerm}%")
-                                  ->orWhere('dictoction_kashayas_juice_every_week', 'LIKE', "%{$searchTerm}%")
-                                  ->orWhere('dictoction_kashayas_juice_afternoon_each_week', 'LIKE', "%{$searchTerm}%")
-                                  ->orWhere('tags', 'LIKE', "%{$searchTerm}%")
-                                  ->get();
-        */
+            $obj = new \ stdClass();
+            $obj->id  = $cancer->id;
 
-        return MilletDietForCancer::getMilletDietForCancer($cancers);
+            $obj -> Type_of_Ailment = $cancer->cancer_type;
+            $obj->Dictoction_Kashayam_Diet = $cancer->dictoction_kashayas_juice_every_week . '<br>'. $cancer->dictoction_kashayas_juice_afternoon_each_week;
+            $obj->Tags_Keywords = $cancer->tags;
+            //$obj->description= $cancer->description;
+            $obj->milletProtocol = $cancer->milletProtocol;
+
+            $arr[] = $obj;
+
+        }
+        return $arr;;
     }
 
     private static function fullTextWildcards($term)
@@ -117,29 +104,26 @@ class MilletDietForCancer extends Model
     private static function getMilletDietForCancer($cancers)
     {
         $arr =[];
-        //id  , Description, array of videos, Type of Ailment or,  Dictoction/Kashayam Diet, Millet Diet, Keywords
+         // print_r($cancers); die();
         foreach($cancers as $cancer) {
-            $rows = DB::table('sd_millet_diet_cancer_table')
-                ->leftjoin('sd_millets_table', 'sd_millet_diet_cancer_table.millet_id', '=', 'sd_millets_table.id')
-                ->leftjoin('sd_cancer_table', 'sd_millet_diet_cancer_table.cancer_type_id', '=', 'sd_cancer_table.id')
-                ->select('sd_cancer_table.id', 'sd_cancer_table.tags',
-                    'sd_millets_table.name', 'sd_millets_table.millet_type', 'sd_millets_table.description', 'sd_millet_diet_cancer_table.number_of_days')
-                ->where('sd_millet_diet_cancer_table.cancer_type_id', '=', $cancer->id)
-                ->get();
+
             $obj = new \ stdClass();
             $obj->id  = $cancer->id;
+
+            $rows = DB::table('sd_millet_diet_cancer_table')
+                ->selectRaw("concat_ws('=',sd_millets_table.name, concat(sd_millet_diet_cancer_table.number_of_days, ' days')) as milletProtocol")
+                ->selectRaw("sd_millets_table.millet_type,sd_millets_table.nutrition,sd_millets_table.description, sd_millets_table.scientific_name, sd_millets_table.uses")
+                ->leftJoin('sd_millets_table', 'sd_millet_diet_cancer_table.millet_Id', '=', 'sd_millets_table.id')->where('sd_millet_diet_cancer_table.cancer_type_id', '=' , $cancer->id)->get();
             $obj -> Type_of_Ailment = $cancer->cancer_type;
             $obj->Dictoction_Kashayam_Diet = $cancer->dictoction_kashayas_juice_every_week . '<br>'. $cancer->dictoction_kashayas_juice_afternoon_each_week;
             $obj->Tags_Keywords = $cancer->tags;
-                           
-            $obj-> Millet_Protocol = '<ul>';
-            
-
-            foreach($rows as $row)
-            {
-                $obj-> Millet_Protocol .= "<li>".$row->name .'=' . $row-> number_of_days .' days </li>';
+            //$obj->description= $cancer->description;
+            $obj->milletProtocol ='<ol>';
+            foreach($rows as $row) {
+                $obj->milletProtocol = '<li>'.$row->milletProtocol . '</li>';
             }
-            $obj-> Millet_Protocol .='</ul>';
+            $obj->milletProtocol ='</ol>';
+            
             $arr[] = $obj;
 
         }
