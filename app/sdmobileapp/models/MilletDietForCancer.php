@@ -58,7 +58,6 @@ class MilletDietForCancer extends Model
             ->leftJoin('sd_millets_table', 'sd_millet_diet_cancer_table.millet_Id', '=', 'sd_millets_table.id')
             ->whereRaw("MATCH(cancer_type, dictoction_kashayas_juice_every_week, dictoction_kashayas_juice_afternoon_each_week, tags) AGAINST('$searchTerm' IN NATURAL LANGUAGE MODE)", MilletDietForCancer::fullTextWildcards($searchTerm))
             ->orWhereRaw("MATCH(sd_millets_table.name,sd_millets_table.description,sd_millets_table.alternative_names,sd_millets_table.uses,sd_millets_table.nutrition) AGAINST('$searchTerm' IN NATURAL LANGUAGE MODE)", MilletDietForCancer::fullTextWildcards($searchTerm))
-            ->orWhereRaw("MATCH(sd_millets_table.name,sd_millets_table.description,sd_millets_table.alternative_names,sd_millets_table.uses,sd_millets_table.nutrition) AGAINST('$searchTerm' IN NATURAL LANGUAGE MODE)", MilletDietForDisease::fullTextWildcards($searchTerm))
             ->orWhereRaw("sd_cancer_table.cancer_type like '%$searchTerm%'")
             ->orWhereRaw("sd_cancer_table.dictoction_kashayas_juice_afternoon_each_week like '%$searchTerm%'")
             ->orWhereRaw("sd_cancer_table.dictoction_kashayas_juice_every_week like '%$searchTerm%'")
