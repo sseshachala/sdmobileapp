@@ -36,7 +36,7 @@ $router->group(['prefix' => 'sdmobile/api/v1.0'], function () use ($router) {
     $router->get('findMilletByCancer/{searchTerm}', ['uses' => 'sdmobileapp\MilletDietForCancerController@findMilletByCancer']);
 
     $router->get('search/filterTypes', ['uses' => 'sdmobileapp\SearchController@getFilterTypes']);
-    $router->get('search/do/{filterType}/{searchTerm}', ['uses' => 'sdmobileapp\SearchController@doSearch']);
+    $router->get('search/do/{searchTerm}', ['uses' => 'sdmobileapp\SearchController@doSearch']);
 
 
     $router->get('milletFaq', ['uses' => 'sdmobileapp\MilletFaqController@showAllFaq']);
