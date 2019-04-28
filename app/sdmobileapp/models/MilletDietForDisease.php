@@ -28,7 +28,7 @@ class MilletDietForDisease extends Model
      */
     protected $hidden = [];
 
-    public static function milletDiet() {
+    public static function milletDietByType($type) {
 
         /*
          * SELECT sd_millet_diet_diseases_table.id,sd_disease_table.ailment_or_disease, sd_disease_table.dictoction_kashayas_Juice,
@@ -38,7 +38,19 @@ class MilletDietForDisease extends Model
          * left join sd_disease_table on sd_millet_diet_diseases_table.disease_id = sd_disease_table.id
          */
         //get the diseases
-        $diseases = Disease::all();
+        //Get
+        $diseases = [];
+        if(empty($type))
+        {
+            $diseases = Disease::all();
+
+        }
+        else
+        {
+            $diseases = Disease::where('type', '=', $type)->get();
+        }
+
+
 
         return MilletDietForDisease::getMilletDietForDisease($diseases);
 
@@ -50,12 +62,12 @@ class MilletDietForDisease extends Model
 
 
         if (in_array($searchTerm, $reserved)) {
-            return MilletDietForDisease::milletDiet();
+            return MilletDietForDisease::milletDietByType('');
         }
 
 
        $diseases = DB::table('sd_disease_table')->selectRaw("sd_disease_table.id, sd_disease_table.ailment_or_disease, sd_disease_table.tags")
-           ->selectRaw("sd_disease_table.dictoction_kashayas_juice")
+           ->selectRaw("sd_disease_table.dictoction_kashayas_juice, sd_disease_table.dictoction_kashayas_juice_every_week")
            ->selectRaw("concat_ws('=',sd_millets_table.name, concat(sd_millet_diet_diseases_table.number_of_days, ' days')) as milletProtocol")
            ->selectRaw("sd_millets_table.millet_type,sd_millets_table.nutrition,sd_millets_table.description, sd_millets_table.scientific_name, sd_millets_table.uses")
            ->selectRaw("MATCH(ailment_or_disease, dictoction_kashayas_juice, tags) AGAINST('$searchTerm' IN NATURAL LANGUAGE MODE) as diseaseRelScore")
@@ -77,7 +89,8 @@ class MilletDietForDisease extends Model
            $obj->id  = $disease->id;
 
            $obj -> Type_of_Ailment = $disease->ailment_or_disease;
-           $obj->Dictoction_Kashayam_Diet = $disease->dictoction_kashayas_juice ;
+           $obj->Dictoction_Kashayam_Diet = $disease->dictoction_kashayas_juice . '<br>'. $disease->dictoction_kashayas_juice_every_week;
+
            $obj->Tags_Keywords = $disease->tags;
            //$obj->description= $cancer->description;
            $obj->milletProtocol = $disease->milletProtocol;

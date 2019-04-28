@@ -29,11 +29,8 @@ $router->group(['prefix' => 'sdmobile/api/v1.0'], function () use ($router) {
 
     $router->get('kidsNote/{id}', ['uses' => 'sdmobileapp\KidsNoteController@showOneNote']);
 
-    $router->get('diseaseMilletDiet', ['uses' => 'sdmobileapp\MilletDietForDiseaseController@showAllMilletDiet']);
-    $router->get('findMilletByDisease/{searchTerm}', ['uses' => 'sdmobileapp\MilletDietForDiseaseController@findMilletByDisease']);
-
-    $router->get('cancerMilletDiet', ['uses' => 'sdmobileapp\MilletDietForCancerController@showAllMilletDiet']);
-    $router->get('findMilletByCancer/{searchTerm}', ['uses' => 'sdmobileapp\MilletDietForCancerController@findMilletByCancer']);
+    $router->get('diseaseMilletDiet', ['uses' => 'sdmobileapp\MilletDietForDiseaseController@showDiseaseMilletDiet']);
+    $router->get('cancerMilletDiet', ['uses' => 'sdmobileapp\MilletDietForDiseaseController@showCancerMilletDiet']);
 
     $router->get('search/filterTypes', ['uses' => 'sdmobileapp\SearchController@getFilterTypes']);
     $router->get('search/do/{searchTerm}', ['uses' => 'sdmobileapp\SearchController@doSearch']);
