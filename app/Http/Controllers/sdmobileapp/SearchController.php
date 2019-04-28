@@ -43,7 +43,7 @@ class SearchController extends Controller
         */
     }
 
-    public function doSearch1(Request $request) {
+    public function doSearchPost(Request $request) {
 
         //print_r($request); die();
         $searchTerm = $request->searchTerm;
