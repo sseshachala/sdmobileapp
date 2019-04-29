@@ -4,11 +4,11 @@ namespace App\sdmobileapp\models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Recipe extends Model
+class GenericData extends Model
 {
     /** @lang text */
     protected $table =
-        "sd_millet_recipes";
+        "sd_generic_data";
 
     /**
      * The attributes that are mass assignable.

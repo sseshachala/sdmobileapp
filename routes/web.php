@@ -36,13 +36,15 @@ $router->group(['prefix' => 'sdmobile/api/v1.0'], function () use ($router) {
     $router->get('search/do/{searchTerm}', ['uses' => 'sdmobileapp\SearchController@doSearch']);
     $router->post('search/doPost', ['uses' => 'sdmobileapp\SearchController@doSearchPost']);
 
-    $router->get('milletLocations', ['uses' => 'sdmobileapp\MilletAvailabilityLocationController@showAll']);
-
 
     $router->get('milletFaq', ['uses' => 'sdmobileapp\MilletFaqController@showAllFaq']);
     $router->get('milletDoc', ['uses' => 'sdmobileapp\MilletDocController@showAll']);
     $router->get('settings', ['uses' => 'sdmobileapp\AppSettingController@showAll']);
-    $router->get('recipes', ['uses' => 'sdmobileapp\MilletRecipeController@showAll']);
+
+    $router->get('recipes', ['uses' => 'sdmobileapp\GenericDataController@getRecipes']);
+    $router->get('milletLocations', ['uses' => 'sdmobileapp\GenericDataController@getMilletLocations']);
+
+
     $router->get('leaves', ['uses' => 'sdmobileapp\KashayaLeavesController@showAll']);
     $router->get('profileTypes', ['uses' => 'sdmobileapp\AppProfileTypeController@showAll']);
 
