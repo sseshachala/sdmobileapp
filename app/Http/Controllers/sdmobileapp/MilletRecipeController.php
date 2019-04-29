@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\sdmobileapp\models;
+namespace App\Http\Controllers\sdmobileapp;
 
 use App\sdmobileapp\models\Recipe;
 use Illuminate\Http\Request;
