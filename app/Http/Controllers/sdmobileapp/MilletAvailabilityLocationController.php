@@ -27,6 +27,7 @@ class MilletAvailabilityLocationController extends Controller
          */
         $arr['current_page'] = $rows['current_page'];
         $arr['first_page_url'] = $rows['first_page_url'];
+        $arr['next_page_url'] = $rows['next_page_url'];
         $arr['from'] = $rows['from'];
         $arr['last_page'] = $rows['last_page'];
         $arr['last_page_url'] = $rows['last_page_url'];
@@ -39,8 +40,8 @@ class MilletAvailabilityLocationController extends Controller
         {
             $obj = new \stdClass();
 
-            $obj->	description = '<div class="mapouter"><div class="gmap_canvas"><iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q='.urlencode($row->address).'&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://www.emojilib.com">emojilib.com</a></div><style>.mapouter{position:relative;text-align:right;height:500px;width:600px;}.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}</style></div>';
-            $obj->	name = $row->	name . ' '.$row->contact_name.'<br>'.$row->contact_phone;
+            $obj->	description = '<b>'.$row->contact_name.'</b></b><br>'.$row->contact_phone.'<br><div class="mapouter"><div class="gmap_canvas"><iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q='.urlencode($row->address).'&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://www.emojilib.com">emojilib.com</a></div><style>.mapouter{position:relative;text-align:right;height:500px;width:600px;}.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}</style></div>';
+            $obj->	name = '<b>' .$row->	name . '</b>';
 
 
             $arr['data'][] =  $obj;
