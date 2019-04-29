@@ -25,7 +25,15 @@ class MilletAvailabilityLocationController extends Controller
          * "per_page":15,"prev_page_url":null,"to":1,"total":1}
          *
          */
-        $arr = (clone) $rows;
+        $arr['current_page'] = $rows['current_page'];
+        $arr['first_page_url'] = $rows['first_page_url'];
+        $arr['from'] = $rows['from'];
+        $arr['last_page'] = $rows['last_page'];
+        $arr['last_page_url'] = $rows['last_page_url'];
+        $arr['per_page'] = $rows['per_page'];
+        $arr['prev_page_url'] = $rows['prev_page_url'];
+        $arr['to'] = $rows['to'];
+        $arr['total'] = $rows['total'];
 
         foreach($rows as $row)
         {
