@@ -89,7 +89,7 @@ class MilletDietForDisease extends Model
            $obj->id  = $disease->id;
 
            $obj -> Type_of_Ailment = $disease->ailment_or_disease;
-           $obj->Dictoction_Kashayam_Diet = $disease->dictoction_kashayas_juice . '<br>'. $disease->dictoction_kashayas_juice_every_week;
+           $obj->Dictoction_Kashayam_Diet = $disease->dictoction_kashayas_juice . '<br><b>Dictoction Juice Eevery Week</b><br>'.$disease->dictoction_kashayas_juice_every_week;
 
            $obj->Tags_Keywords = $disease->tags;
            //$obj->description= $cancer->description;
@@ -121,7 +121,7 @@ class MilletDietForDisease extends Model
             $obj = new \ stdClass();
             $obj->id  = $disease->id;
             $obj -> Type_of_Ailment = $disease->ailment_or_disease;
-            $obj->Dictoction_Kashayam_Diet=$disease->dictoction_kashayas_juice;
+            $obj->Dictoction_Kashayam_Diet=$disease->dictoction_kashayas_juice . '<br><b>Dictoction Juice Eevery Week</b><br>'.$disease->dictoction_kashayas_juice_every_week;
             $obj->Tags_Keywords = $disease->tags;
             $obj-> milletProtocol ='<ul>';
             foreach($rows as $row)
