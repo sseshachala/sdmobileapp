@@ -49,7 +49,7 @@ class GenericDataController extends Controller
             {
                 $contact = json_decode($description);
 
-                $obj->description = '<img src="'.$row->image.'" width="500" height="200"><br>'.$contact->description. '<br>'
+                $obj->description = '<img src="'.$row->image.'" width="400" height="200"><br>'.$contact->description. '<br>'
                                          .'<b>Contact:</b>'.$contact->contact.'<br><b>Phone:</b>'.$contact->phone
                                          .'<br><div class="mapouter"><div class="gmap_canvas"><iframe width="600" height="300" id="gmap_canvas" src="https://maps.google.com/maps?q='.urlencode($contact->address).'&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://www.emojilib.com">emojilib.com</a></div><style>.mapouter{position:relative;text-align:right;height:500px;width:600px;}.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}</style></div>';
             }
