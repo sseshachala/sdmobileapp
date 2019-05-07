@@ -47,7 +47,10 @@ class GenericDataController extends Controller
             if(self::isJson($description))
             {
                 $contact = json_decode($description);
-                $obj->      description = '<b>Contact:</b>'.$contact->contact.'<br><b>Phone:</b>'.$contact->phone.'<br><div class="mapouter"><div class="gmap_canvas"><iframe width="600" height="300" id="gmap_canvas" src="https://maps.google.com/maps?q='.urlencode($contact->address).'&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://www.emojilib.com">emojilib.com</a></div><style>.mapouter{position:relative;text-align:right;height:500px;width:600px;}.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}</style></div>';
+
+                $obj->description = '<img src="'.$row->image.'" width="42" height="42">'.'<b>'.$row->name.'<b/><br>'
+                                         .'<b>Contact:</b>'.$contact->contact.'<br><b>Phone:</b>'.$contact->phone
+                                         .'<br><div class="mapouter"><div class="gmap_canvas"><iframe width="600" height="300" id="gmap_canvas" src="https://maps.google.com/maps?q='.urlencode($contact->address).'&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://www.emojilib.com">emojilib.com</a></div><style>.mapouter{position:relative;text-align:right;height:500px;width:600px;}.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}</style></div>';
             }
             $obj->      name = '<b>' .$row->    name . '</b>';
 
