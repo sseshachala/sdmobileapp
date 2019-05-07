@@ -44,6 +44,7 @@ class GenericDataController extends Controller
             $obj = new \stdClass();
 
             $description = str_replace("\r\n", "", $row->description);
+            //echo $description;
             if(self::isJson($description))
             {
                 $contact = json_decode($description);
