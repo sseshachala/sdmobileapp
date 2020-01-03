@@ -19,7 +19,7 @@ $router->group(['prefix' => 'sdmobile/api/v1.0'], function () use ($router) {
 
     $router->post('user/login', ['uses' => 'sdmobileapp\UserController@login']);
     $router->post('user/register', ['uses' => 'sdmobileapp\UserController@register']);
-
+    $router->post('user/info', ['uses' => 'sdmobileapp\UserController@info']);
 
     $router->get('menu',  ['uses' => 'sdmobileapp\MenuController@showAllMenu']);
     $router->get('millets',  ['uses' => 'sdmobileapp\MilletController@showAllMillets']);

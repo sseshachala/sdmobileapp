@@ -4768,6 +4768,54 @@
         "description": "A small library for converting tokenized PHP source code into XML and potentially other formats"
     },
     {
+        "name": "twilio/sdk",
+        "version": "5.31.3",
+        "version_normalized": "5.31.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/twilio/twilio-php.git",
+            "reference": "58a8322c5a8ce2ff7d68cd16ff56dc8ab44c168f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/twilio/twilio-php/zipball/58a8322c5a8ce2ff7d68cd16ff56dc8ab44c168f",
+            "reference": "58a8322c5a8ce2ff7d68cd16ff56dc8ab44c168f",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.5.0"
+        },
+        "require-dev": {
+            "apigen/apigen": "^4.1",
+            "phpunit/phpunit": "4.5.*"
+        },
+        "time": "2019-05-01T17:36:14+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Twilio\\": "Twilio/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Twilio API Team",
+                "email": "api@twilio.com"
+            }
+        ],
+        "description": "A PHP wrapper for Twilio's API",
+        "homepage": "http://github.com/twilio/twilio-php",
+        "keywords": [
+            "api",
+            "sms",
+            "twilio"
+        ]
+    },
+    {
         "name": "vlucas/phpdotenv",
         "version": "v3.3.3",
         "version_normalized": "3.3.3.0",
